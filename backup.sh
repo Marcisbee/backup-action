@@ -119,7 +119,7 @@ if [ ! -z "$INPUT_DB_TYPE" ] && [ "$INPUT_DB_TYPE" != "" ]; then
   CURR_DIR=$(pwd)
   echo "$CURR_DIR/$BACKUP_DIR"
   
-  chmod -R g+w ./$BACKUP_DIR/
+  chmod -R 0777 ./$BACKUP_DIR/
 
   echo "🔍 Show me backups... 😎"
   ls -lFhS ./$BACKUP_DIR/
