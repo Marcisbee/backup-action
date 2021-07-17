@@ -121,6 +121,7 @@ if [ ! -z "$INPUT_DB_TYPE" ] && [ "$INPUT_DB_TYPE" != "" ]; then
 
   echo "🔍 Show me backups... 😎"
   ls -lFhS ./$BACKUP_DIR/
+  chmod -R g+w ./$BACKUP_DIR/
 else
   if [ ! -z "$INPUT_SCRIPT" ] && [ "$INPUT_SCRIPT" != "" ]; then
     echo "Cheers 🍻"
@@ -130,6 +131,3 @@ else
     exit 1
   fi
 fi
-
-
-
