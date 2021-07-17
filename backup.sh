@@ -12,6 +12,23 @@ INPUT_PASS=""
 EXTRA_SCRIPT=""
 
 #----------------------------------------
+# Load the ssh key to docker container
+#----------------------------------------
+if [ ! -z "$INPUT_KEY" ] && [ "$INPUT_KEY" != "" ]; then
+  echo "🔑 Loading the ssh key..."
+  mkdir -p $HOME/.ssh
+  echo "$INPUT_KEY" > $HOME/.ssh/deploykey 
+  chmod 600 $HOME/.ssh/deploykey
+  echo "Done!! 🍻"
+  if [ ! -z "$INPUT_PASSWORD" ] && [ "$INPUT_PASSWORD" != "" ]; then
+    INPUT_KEY="" # Hack to save us from Error: can't set password and key at the same time
+  fi
+else
+  echo "😔 key is not set, Please set key."
+  exit 1
+fi
+
+#----------------------------------------
 # Prepare to recipe to backup
 #----------------------------------------
 echo "🗃️ Backup type: $INPUT_TYPE"
