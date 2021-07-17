@@ -14,7 +14,7 @@ EXTRA_SCRIPT=""
 #----------------------------------------
 # Load the ssh key to docker container
 #----------------------------------------
-if [ ! -z "$INPUT_KEY" ] && [ "$INPUT_KEY" != "" ]; then
+if [ ! -z "$INPUT_KEY" ] && [ "$INPUT_KEY" != "" ] && [ "$INPUT_PASSWORD" != "" ]; then
   echo "🔑 Loading the ssh key..."
   mkdir -p $HOME/.ssh
   echo "$INPUT_KEY" > $HOME/.ssh/deploykey 
