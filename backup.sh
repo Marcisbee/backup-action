@@ -12,18 +12,6 @@ INPUT_PASS=""
 EXTRA_SCRIPT=""
 
 #----------------------------------------
-# Load the ssh key to docker container
-#----------------------------------------
-echo "🔑 Loading the ssh key..."
-mkdir -p $HOME/.ssh
-echo "$INPUT_KEY" > $HOME/.ssh/deploykey 
-chmod 600 $HOME/.ssh/deploykey
-echo "Done!! 🍻"
-if [ ! -z "$INPUT_PASSWORD" ] && [ "$INPUT_PASSWORD" != "" ]; then
-  INPUT_KEY="" # Hack to save us from Error: can't set password and key at the same time
-fi
-
-#----------------------------------------
 # Prepare to recipe to backup
 #----------------------------------------
 echo "🗃️ Backup type: $INPUT_TYPE"
@@ -74,7 +62,7 @@ if [ "$INPUT_TYPE" = "db" ]; then
       FILENAME=$INPUT_DB_TYPE-$INPUT_DB_NAME.$THEDATE.pgsql.gz
       INPUT_DB_PORT="${INPUT_DB_PORT:-5432}"
       INPUT_ARGS="${INPUT_ARGS} -C --column-inserts"
-      INPUT_SCRIPT="PGPASSWORD='$INPUT_DB_PASS' pg_dump -U $INPUT_DB_USER -h $INPUT_DB_HOST $INPUT_ARGS $INPUT_DB_NAME | gzip -9 > $FILENAME ${EXTRA_SCRIPT}"
+      INPUT_SCRIPT="PGPASSWORD='$INPUT_DB_PASS' docker exec hasura_postgres_1 pg_dump -U $INPUT_DB_USER -h $INPUT_DB_HOST $INPUT_ARGS $INPUT_DB_NAME | gzip -9 > $FILENAME ${EXTRA_SCRIPT}"
     fi
 fi
 
